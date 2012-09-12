@@ -10,7 +10,7 @@
 int led = 13;
 char recibido = '1';
 
-// the setup routine runs once when you press reset:
+// the setup routine runs once when you press rese
 void setup() {                
   // initialize the digital pin as an output.
   Serial.begin(9600);
