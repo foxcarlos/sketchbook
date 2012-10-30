@@ -1,19 +1,21 @@
 /*
-  Blink
-  Turns on an LED on for one second, then off for one second, repeatedly.
+  Ejemplo de Sensor PIR
+  Sensor de proximidad que al momento de detectar movimiento
+  Enciende un Bobillo por 2 segundos y luego lo apaga.
+  */
  
-  This example code is in the public domain.
- */
- 
-// Pin 13 has an LED connected on most Arduino boards.
-// give it a name:
+// Pin 13 conectado en arduino el cual permite encender el Bomillo.
+// Pin 2 Conectado al Sensor de Proximidad o movimiento
 int led = 13;
 int pirpin = 2;
 
 
 // the setup routine runs once when you press reset:
 void setup() {                
-  // initialize the digital pin as an output.
+  // Inicializa o apertuta el Puerto serial, 
+  // Inicializa el pin 13 como salidad 
+  // Inicializa el pin 2 como entrada.
+  
   Serial.begin(9600);
   pinMode(led, OUTPUT);
   pinMode(pirpin, INPUT);
@@ -26,7 +28,7 @@ void loop() {
   if(pirVal == 1){
     Serial.println("Movimiento");
     digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
-    //delay(100);               // wait for a second
+    delay(5000);               // wait for a second
   }
   else {
     Serial.println("Nadie");
