@@ -61,6 +61,8 @@ void beep(unsigned char pausa)
         }
 void setup()  
 {
+  boolean gpsListo = false;
+  pinMode(13, OUTPUT); //Led cuando el GPS funciona bien
     
   // connect at 115200 so we can read the GPS fast enough and echo without dropping chars
   // also spit it out
@@ -152,6 +154,7 @@ void loop()                     // run over and over again
   // approximately every 2 seconds or so, print out the current stats
   if (millis() - timer > 2000) { 
     timer = millis(); // reset the timer
+    Serial.println("===============Datos de FECHA====================="); 
     Serial.print("\nHora: ");
     Serial.print(GPS.hour, DEC); Serial.print(':');
     Serial.print(GPS.minute, DEC); Serial.print(':');
@@ -163,7 +166,18 @@ void loop()                     // run over and over again
     Serial.println(GPS.year, DEC);
     Serial.print("Fix: "); Serial.print((int)GPS.fix);
     Serial.print(" Calidad: "); Serial.println((int)GPS.fixquality); 
+    Serial.println(""); 
     if (GPS.fix) {
+      // Si esta activo ya el gps emite un sonido
+      if ((int)GPS.satellites>0){
+        digitalWrite(13, HIGH);
+        //beep(20);
+      }
+      else{
+        digitalWrite(13, LOW);
+      }
+      
+      Serial.println("=============Datos de UBICACION=================="); 
       Serial.print("Ubicacion: ");
       Serial.print(GPS.latitude, 4); Serial.print(GPS.lat);
       Serial.print(", "); 
@@ -173,10 +187,16 @@ void loop()                     // run over and over again
       Serial.print(", "); 
       Serial.println(GPS.longitudeDegrees, 4);
       float kmh = (1.852 * GPS.speed);
-      Serial.print("Velocidad (Nudos): "); Serial.println(GPS.speed);
+      //Serial.print("Velocidad (Nudos): "); Serial.println(GPS.speed);
+      Serial.println("=============Datos de VELOCIDAD=================="); 
       Serial.print("Velocidad (KM/H): "); Serial.println(kmh);
-      if (kmh>=50){
+      Serial.println("=================================================="); 
+      if (kmh>=20 and kmh<=23){
         beep(20);
+        beep(20);
+      }
+      
+      if (kmh>=50 and kmh<=53){
         beep(20);
         beep(20);
         beep(20);
